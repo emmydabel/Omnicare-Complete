@@ -1,0 +1,129 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Space Grotesk", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-data: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Deep navy — deliberately more saturated-blue than default slate, so the
+     sidebar/hero reads as a specific brand color rather than generic gray. */
+  --color-navy-950: #060b17;
+  --color-navy-900: #0b1526;
+  --color-navy-800: #12203a;
+  --color-navy-700: #1a2d4d;
+  --color-navy-600: #24406b;
+}
+
+@layer base {
+  html {
+    font-family: var(--font-sans);
+  }
+
+  body {
+    @apply bg-slate-50 text-slate-900;
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .font-data {
+    font-family: var(--font-data);
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* -----------------------------------------------------------------------
+   EKG pulse — OMNICARE's signature animated element. Two copies of the same
+   waveform are tiled back to back inside a clipped, fixed-width track; the
+   track translates left by exactly one waveform-width on an infinite loop,
+   which reads as a continuously scrolling monitor trace.
+   ----------------------------------------------------------------------- */
+.ekg-track {
+  animation: ekgScroll 2.6s linear infinite;
+}
+@keyframes ekgScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-300px);
+  }
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-in {
+  animation: fadeSlideIn 0.25s ease-out both;
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.toast-in {
+  animation: toastIn 0.22s ease-out both;
+}
+
+@keyframes typingDot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+.typing-dot {
+  animation: typingDot 1.1s ease-in-out infinite;
+}
+
+/* Respect reduced-motion preferences: freeze decorative animation, keep the
+   EKG trace itself visible (just static) rather than jarringly cut it. */
+@media (prefers-reduced-motion: reduce) {
+  .ekg-track,
+  .animate-in,
+  .toast-in,
+  .typing-dot,
+  .animate-pulse,
+  .animate-ping {
+    animation: none !important;
+  }
+}

@@ -1,0 +1,35 @@
+# Python / Django (backend/)
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.venv
+*.egg-info/
+db.sqlite3
+media/
+staticfiles/
+
+# Node / Next.js (frontend/)
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+
+# Environment secrets — never commit real values
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*

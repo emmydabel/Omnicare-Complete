@@ -1,0 +1,29 @@
+# OMNICARE backend dependencies.
+#
+# Versions below were the current stable releases as of the build date
+# (late June 2026), EXCEPT google-genai — see the note right above that
+# line, updated 2026-07-19. This project was hand-written in a sandboxed
+# environment with no network access, so these were never actually
+# pip-installed here — run `pip install -U -r requirements.txt` when you
+# first set up to pick up any patch releases since, and re-run
+# `pip list --outdated` periodically.
+
+Django==6.0.6
+djangorestframework==3.17.1
+djangorestframework-simplejwt==5.5.1
+django-cors-headers==4.7.0
+django-filter==25.1
+psycopg[binary]==3.2.6
+python-dotenv==1.2.2
+# Google rolled out a new API key format (prefixed "AQ.", replacing the old
+# "AIza..." format) starting mid-2026 — bumped this floor from 1.20.0 to
+# 2.8.0 (current as of this update) specifically because an outdated SDK
+# version is one plausible reason an otherwise-valid new-format key could
+# fail. Always worth running `pip install -U google-genai` if ARIA gives
+# the fallback "trouble reaching the AI service" reply with a key you're
+# sure is correct.
+google-genai>=2.8.0
+
+# Production serving (optional for local dev, used by docker-compose/deploy)
+gunicorn==23.0.0
+whitenoise==6.8.2

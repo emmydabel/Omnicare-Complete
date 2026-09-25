@@ -1,0 +1,51 @@
+databases:
+  - name: omnicare-db
+    plan: free
+    databaseName: omnicare
+    user: omnicare_user
+
+services:
+  - type: web
+    name: omnicare-backend
+    runtime: python
+    plan: free
+    buildCommand: |
+      pip install -r requirements.txt
+      python manage.py collectstatic --noinput
+      python manage.py migrate --noinput
+    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.4"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: DB_NAME
+        fromDatabase:
+          name: omnicare-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: omnicare-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: omnicare-db
+          property: password
+      - key: DB_HOST
+        fromDatabase:
+          name: omnicare-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: omnicare-db
+          property: port
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false  # Set this to your Vercel frontend URL after deploying
+      - key: GEMINI_API_KEY
+        sync: false  # Set your real key in the Render dashboard
+      - key: GEMINI_MODEL
+        value: "gemini-3.5-flash"

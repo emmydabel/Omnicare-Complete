@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:18
+    container_name: omnicare-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: omnicare
+      POSTGRES_USER: omnicare_user
+      POSTGRES_PASSWORD: omnicare_pass
+    ports:
+      - "5432:5432"
+    volumes:
+      - omnicare_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U omnicare_user -d omnicare"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  omnicare_pgdata:
