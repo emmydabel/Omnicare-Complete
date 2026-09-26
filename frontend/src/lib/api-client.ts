@@ -1,7 +1,7 @@
 import { authCookies } from "./cookies";
 import type { ApiErrorBody } from "./types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000/api";
+const API_BASE = "https://omnicare-complete.onrender.com/api";
 
 export class ApiError extends Error {
   status: number;

@@ -1,9 +1,7 @@
 import type { NextConfig } from "next";
 import path from "path";
 
-const backendUrl = process.env.NEXT_PUBLIC_API_URL
-  ? process.env.NEXT_PUBLIC_API_URL.replace(/\/api\/?$/, "")
-  : "http://localhost:8000";
+const backendUrl = "https://omnicare-complete.onrender.com";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
