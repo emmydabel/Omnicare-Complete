@@ -12,4 +12,7 @@ python manage.py collectstatic --noinput
 echo "==> Running database migrations..."
 python manage.py migrate --noinput
 
+echo "==> Seeding demo data..."
+python manage.py seed_demo_data
+
 echo "==> Build complete!"
